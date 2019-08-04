@@ -1,6 +1,9 @@
 import React from "react";
+import { SwipeRow, HiddenView, VisibleView } from "../SwipeRow";
+import Item from "./Item";
+import Confirm from "./Confirm";
 
-function ListItem(props) {
+function ListItem({ item }) {
   return (
     <SwipeRow>
       <HiddenView>
