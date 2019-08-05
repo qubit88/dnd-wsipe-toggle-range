@@ -2,11 +2,14 @@
   display: flex;
   justify-content: space-between;
   height: 100%;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .App__row {
   width: 40%;
-  height: 100%;
+  height: 70%;
 }
 
 #root {

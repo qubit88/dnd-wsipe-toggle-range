@@ -5,7 +5,7 @@ function VisibleView({ children }) {
   const [initialPos, setInitialPos] = useState(null);
   const [isSwiping, setIsSwiping] = useState(false);
   const [translate, setTranslate] = useState(0);
-  const threshold = 3;
+  const threshold = 2;
 
   function onMouseDown(event) {
     setInitialPos({ x: event.clientX, y: event.clientY });
@@ -17,17 +17,15 @@ function VisibleView({ children }) {
 
     console.log(deltaX);
 
-    if (deltaX > 20) {
-      if (isSwiping) {
-        // debugger;
-        setTranslate(deltaX);
-      } else {
-        const deltaY = Math.abs(initialPos.y - event.clientY);
-        const s = deltaX / deltaY;
+    if (isSwiping) {
+      // debugger;
+      setTranslate(deltaX);
+    } else if (deltaX > 20) {
+      const deltaY = Math.abs(initialPos.y - event.clientY);
+      const s = deltaX / deltaY;
 
-        if (s > threshold) {
-          setIsSwiping(true);
-        }
+      if (s > threshold) {
+        setIsSwiping(true);
       }
     }
   }
