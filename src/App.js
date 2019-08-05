@@ -17,6 +17,7 @@ class App extends React.Component {
     let movedItem;
     let index;
     const dropIndex = this.state.data.findIndex(item => item.id === prevId);
+    const newType = this.state.data[dropIndex].type;
     const newList = this.state.data.filter((item, i) => {
       if (item.id === id) {
         movedItem = item;
@@ -26,6 +27,8 @@ class App extends React.Component {
 
       return true;
     });
+
+    movedItem = { ...movedItem, type: newType };
 
     const newIndex = dropIndex > index ? dropIndex + 1 : dropIndex;
 

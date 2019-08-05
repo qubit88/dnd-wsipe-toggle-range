@@ -11,6 +11,7 @@ function VisibleView({ children }) {
   function onMouseDown(event) {
     setInitialPos({ x: event.clientX, y: event.clientY });
     setPaused(false);
+    event.stopPropagation();
   }
 
   function onMouseMove(event) {
@@ -25,7 +26,7 @@ function VisibleView({ children }) {
     if (s > threshold) {
       if (deltaX > 10) {
         setIsSwiping(true);
-        setTranslate("-75");
+        setTranslate("-25");
       } else if (deltaX < -10) {
         setIsSwiping(false);
         setTranslate("0");
