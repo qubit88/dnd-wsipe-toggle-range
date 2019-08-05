@@ -21,7 +21,8 @@ export class DraggableList extends Component {
   };
 
   render() {
-    let { data, DraggableItem, style, rowStyle } = this.props;
+    let { data, DraggableItem, style, rowStyle, sort } = this.props;
+    console.log(sort);
     return (
       <div style={style}>
         {data.map(i => {
@@ -30,7 +31,7 @@ export class DraggableList extends Component {
               onDragStart={event => this.onDragStart(event, i.id)}
               onDrop={event => this.onDrop(event, i.id)}
               onDragOver={e => e.preventDefault()}
-              draggable
+              draggable={sort}
               style={rowStyle}
             >
               <DraggableItem item={i} />

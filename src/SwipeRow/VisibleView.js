@@ -8,13 +8,18 @@ function VisibleView({ children }) {
   const [paused, setPaused] = useState(null);
   const threshold = 2;
 
-  function onMouseDown(event) {
+  function onSwipeStart(event) {
+    // event.preventDefault();
+    event = event.changedTouches ? event.changedTouches[0] : event;
+
     setInitialPos({ x: event.clientX, y: event.clientY });
     setPaused(false);
-    event.stopPropagation();
   }
 
-  function onMouseMove(event) {
+  function onSwipeMove(event) {
+    // event.preventDefault();
+    event = event.changedTouches ? event.changedTouches[0] : event;
+
     if (paused || !initialPos) {
       return;
     }
@@ -34,7 +39,7 @@ function VisibleView({ children }) {
     }
   }
 
-  function onMouseUp(event) {
+  function onSwipeEnd(event) {
     // if (isSwiping) {
     setPaused(true);
     // }
@@ -44,9 +49,12 @@ function VisibleView({ children }) {
   return (
     <div
       style={{ transform: `translateX(${translate}%)` }}
-      onMouseDown={onMouseDown}
-      onMouseMove={onMouseMove}
-      onMouseUp={onMouseUp}
+      onMouseDown={onSwipeStart}
+      onTouchStart={onSwipeStart}
+      onMouseMove={onSwipeMove}
+      onTouchMove={onSwipeMove}
+      onMouseUp={onSwipeEnd}
+      onTouchEnd={onSwipeEnd}
       className="VisibleView"
     >
       {children}

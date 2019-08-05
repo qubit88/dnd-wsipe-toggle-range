@@ -9,7 +9,8 @@ class App extends React.Component {
     super();
 
     this.state = {
-      data
+      data,
+      sort: false
     };
   }
 
@@ -42,6 +43,10 @@ class App extends React.Component {
     this.setState({ data: [...newData] });
   };
 
+  onToggleSort = () => {
+    this.setState(state => ({ sort: !state.sort }));
+  };
+
   render() {
     const type1 = this.state.data.filter(item => item.type === "one");
     const type2 = this.state.data.filter(item => item.type === "two");
@@ -65,6 +70,15 @@ class App extends React.Component {
 
     return (
       <div className="App">
+        <div>
+          <input
+            type="checkbox"
+            onChange={this.onToggleSort}
+            checked={this.state.sort}
+          />
+          Sort mode
+        </div>
+
         <div className="App__row">
           <h1>One</h1>
 
@@ -74,6 +88,7 @@ class App extends React.Component {
             data={type1}
             DraggableItem={Item}
             onMove={this.onMove}
+            sort={this.state.sort}
           />
         </div>
         <div className="App__row">
@@ -85,6 +100,7 @@ class App extends React.Component {
             data={type2}
             DraggableItem={Item}
             onMove={this.onMove}
+            sort={this.state.sort}
           />
         </div>
       </div>
