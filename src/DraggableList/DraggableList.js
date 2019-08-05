@@ -28,6 +28,7 @@ export class DraggableList extends Component {
         {data.map(i => {
           return (
             <div
+              key={i.id}
               onDragStart={event => this.onDragStart(event, i.id)}
               onDrop={event => this.onDrop(event, i.id)}
               onDragOver={e => e.preventDefault()}
