@@ -14,28 +14,19 @@ function VisibleView({ children }) {
   }
 
   function onMouseMove(event) {
-    if (paused) {
+    if (paused || !initialPos) {
       return;
     }
     const deltaX = initialPos ? initialPos.x - event.clientX : 0;
+    let deltaY = Math.abs(initialPos.y - event.clientY);
+    deltaY = deltaY ? deltaY : 1;
+    const s = Math.abs(deltaX / deltaY);
 
-    console.log(deltaX);
-
-    if (deltaX > 10) {
-      let deltaY = Math.abs(initialPos.y - event.clientY);
-      deltaY = deltaY ? deltaY : 1;
-      const s = Math.abs(deltaX / deltaY);
-
-      if (s > threshold) {
+    if (s > threshold) {
+      if (deltaX > 10) {
         setIsSwiping(true);
         setTranslate("-75");
-      }
-    } else if (deltaX < -10) {
-      let deltaY = Math.abs(initialPos.y - event.clientY);
-      deltaY = deltaY ? deltaY : 1;
-      const s = Math.abs(deltaX / deltaY);
-
-      if (s > threshold) {
+      } else if (deltaX < -10) {
         setIsSwiping(false);
         setTranslate("0");
       }
