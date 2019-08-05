@@ -32,7 +32,7 @@ class App extends React.Component {
   };
 
   onDelete = id => {
-    const newData = this.state.data.filter(item => item.id === id);
+    const newData = this.state.data.filter(item => item.id !== id);
     this.setState({ data: [...newData] });
   };
 
@@ -41,11 +41,7 @@ class App extends React.Component {
     const type2 = this.state.data.filter(item => item.type === "two");
 
     const Item = ({ item, isActive }) => (
-      <ListItem
-        item={item}
-        isActive={isActive}
-        onConfirmSwipe={this.onDelete}
-      />
+      <ListItem item={item} isActive={isActive} onDelete={this.onDelete} />
     );
 
     const style = {
@@ -55,6 +51,12 @@ class App extends React.Component {
       flexDirection: "column"
     };
 
+    const rowStyle = {
+      width: "100%",
+      maxHeight: "3em",
+      height: "10vw"
+    };
+
     return (
       <div className="App">
         <div className="App__row">
@@ -62,6 +64,7 @@ class App extends React.Component {
 
           <DraggableList
             style={style}
+            rowStyle={rowStyle}
             data={type1}
             DraggableItem={Item}
             onMove={this.onMove}
@@ -72,6 +75,7 @@ class App extends React.Component {
 
           <DraggableList
             style={style}
+            rowStyle={rowStyle}
             data={type2}
             DraggableItem={Item}
             onMove={this.onMove}

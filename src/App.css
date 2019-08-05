@@ -1,15 +1,15 @@
 .App {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   height: 100%;
   width: 90%;
   margin-left: auto;
   margin-right: auto;
+  flex-direction: column;
 }
 
 .App__row {
-  width: 40%;
-  height: 70%;
+  width: 100%;
 }
 
 #root {

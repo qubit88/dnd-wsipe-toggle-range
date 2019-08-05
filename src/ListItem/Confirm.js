@@ -1,10 +1,15 @@
 import React from "react";
 import "./Confirm.css";
 
-function Confirm() {
+function Confirm({ onDelete }) {
   return (
     <div className="Confirm">
-      <button className="Confirm__delete Confirm__button">delete</button>
+      <button
+        onClick={() => onDelete()}
+        className="Confirm__delete Confirm__button"
+      >
+        delete
+      </button>
       <button className="Confirm__cancel Confirm__button">cancel</button>
     </div>
   );

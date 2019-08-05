@@ -8,12 +8,12 @@ export class DraggableList extends Component {
     this.state = {};
   }
   render() {
-    let { data, DraggableItem, onMove, style } = this.props;
+    let { data, DraggableItem, onMove, style, rowStyle } = this.props;
     return (
       <div style={style}>
         {data.map(i => {
           return (
-            <div className="DraggableList__item">
+            <div style={rowStyle}>
               <DraggableItem item={i} />
             </div>
           );
