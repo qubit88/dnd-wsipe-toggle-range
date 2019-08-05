@@ -3,11 +3,11 @@ import { SwipeRow, HiddenView, VisibleView } from "../SwipeRow";
 import Item from "./Item";
 import Confirm from "./Confirm";
 
-function ListItem({ item }) {
+function ListItem({ item, onConfirmSwipe }) {
   return (
     <SwipeRow>
       <HiddenView>
-        <Confirm />
+        <Confirm onConfirm={onConfirmSwipe} />
       </HiddenView>
       <VisibleView>
         <Item item={item} />

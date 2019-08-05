@@ -31,12 +31,21 @@ class App extends React.Component {
     newList.splice(newIndex, 0, movedItem);
   };
 
+  onConfirmSwipe = id => {
+    const newData = this.state.data.filter(item => item.id === id);
+    this.setState({ data: [...newData] });
+  };
+
   render() {
     const type1 = this.state.data.filter(item => item.type === "one");
     const type2 = this.state.data.filter(item => item.type === "two");
 
     const Item = ({ item, isActive }) => (
-      <ListItem item={item} isActive={isActive} />
+      <ListItem
+        item={item}
+        isActive={isActive}
+        onConfirmSwipe={this.onConfirmSwipe}
+      />
     );
 
     const style = {
