@@ -9,12 +9,8 @@ function VisibleView({ children }) {
   const threshold = 2;
 
   function onMouseDown(event) {
-    if (!isSwiping) {
-      setInitialPos({ x: event.clientX, y: event.clientY });
-    }
-
+    setInitialPos({ x: event.clientX, y: event.clientY });
     setPaused(false);
-    console.log(initialPos);
   }
 
   function onMouseMove(event) {
@@ -25,18 +21,23 @@ function VisibleView({ children }) {
 
     console.log(deltaX);
 
-    if (isSwiping) {
-      // debugger;
-      if (deltaX === 0) {
-        setIsSwiping(false);
-      }
-      setTranslate(deltaX);
-    } else if (deltaX > 10) {
-      const deltaY = Math.abs(initialPos.y - event.clientY);
-      const s = deltaX / deltaY;
+    if (deltaX > 10) {
+      let deltaY = Math.abs(initialPos.y - event.clientY);
+      deltaY = deltaY ? deltaY : 1;
+      const s = Math.abs(deltaX / deltaY);
 
       if (s > threshold) {
         setIsSwiping(true);
+        setTranslate("-75");
+      }
+    } else if (deltaX < -10) {
+      let deltaY = Math.abs(initialPos.y - event.clientY);
+      deltaY = deltaY ? deltaY : 1;
+      const s = Math.abs(deltaX / deltaY);
+
+      if (s > threshold) {
+        setIsSwiping(false);
+        setTranslate("0");
       }
     }
   }
@@ -50,7 +51,7 @@ function VisibleView({ children }) {
   }
   return (
     <div
-      style={{ transform: `translateX(-${translate}px)` }}
+      style={{ transform: `translateX(${translate}%)` }}
       onMouseDown={onMouseDown}
       onMouseMove={onMouseMove}
       onMouseUp={onMouseUp}
