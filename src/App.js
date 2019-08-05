@@ -31,7 +31,7 @@ class App extends React.Component {
     newList.splice(newIndex, 0, movedItem);
   };
 
-  onConfirmSwipe = id => {
+  onDelete = id => {
     const newData = this.state.data.filter(item => item.id === id);
     this.setState({ data: [...newData] });
   };
@@ -44,7 +44,7 @@ class App extends React.Component {
       <ListItem
         item={item}
         isActive={isActive}
-        onConfirmSwipe={this.onConfirmSwipe}
+        onConfirmSwipe={this.onDelete}
       />
     );
 
