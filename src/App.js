@@ -13,22 +13,25 @@ class App extends React.Component {
     };
   }
 
-  OnMove = (id, prevId, after) => {
+  onMove = (id, prevId) => {
     let movedItem;
-    const newList = this.state.data.filter(item => {
+    let index;
+    const dropIndex = this.state.data.findIndex(item => item.id === prevId);
+    const newList = this.state.data.filter((item, i) => {
       if (item.id === id) {
         movedItem = item;
+        index = i;
         return false;
       }
 
       return true;
     });
 
-    let prevIndex = newList.findIndex(item => item.id === prevId);
-
-    const newIndex = after ? prevIndex : prevIndex + 1;
+    const newIndex = dropIndex > index ? dropIndex + 1 : dropIndex;
 
     newList.splice(newIndex, 0, movedItem);
+
+    this.setState({ data: [...newList] });
   };
 
   onDelete = id => {
