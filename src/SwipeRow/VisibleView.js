@@ -5,22 +5,33 @@ function VisibleView({ children }) {
   const [initialPos, setInitialPos] = useState(null);
   const [isSwiping, setIsSwiping] = useState(false);
   const [translate, setTranslate] = useState(0);
+  const [paused, setPaused] = useState(null);
   const threshold = 2;
 
   function onMouseDown(event) {
-    setInitialPos({ x: event.clientX, y: event.clientY });
+    if (!isSwiping) {
+      setInitialPos({ x: event.clientX, y: event.clientY });
+    }
+
+    setPaused(false);
     console.log(initialPos);
   }
 
   function onMouseMove(event) {
+    if (paused) {
+      return;
+    }
     const deltaX = initialPos ? initialPos.x - event.clientX : 0;
 
     console.log(deltaX);
 
     if (isSwiping) {
       // debugger;
+      if (deltaX === 0) {
+        setIsSwiping(false);
+      }
       setTranslate(deltaX);
-    } else if (deltaX > 20) {
+    } else if (deltaX > 10) {
       const deltaY = Math.abs(initialPos.y - event.clientY);
       const s = deltaX / deltaY;
 
@@ -31,8 +42,11 @@ function VisibleView({ children }) {
   }
 
   function onMouseUp(event) {
-    setInitialPos(null);
-    setIsSwiping(false);
+    // if (isSwiping) {
+    setPaused(true);
+    // }
+    // setInitialPos(null);
+    // setIsSwiping(false);
   }
   return (
     <div
