@@ -1,5 +1,5 @@
 import SwipeRow from "./SwipeRow";
-import HiddenRow from "./HiddenRow";
-import VisibleRow from "./VisibleRow";
+import HiddenView from "./HiddenView";
+import VisibleView from "./VisibleView";
 
-export { SwipeRow, HiddenRow, VisibleRow };
+export { SwipeRow, HiddenView, VisibleView };

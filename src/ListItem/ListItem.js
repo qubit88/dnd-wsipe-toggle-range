@@ -10,7 +10,7 @@ function ListItem({ item }) {
         <Confirm />
       </HiddenView>
       <VisibleView>
-        <Item />
+        <Item item={item} />
       </VisibleView>
     </SwipeRow>
   );

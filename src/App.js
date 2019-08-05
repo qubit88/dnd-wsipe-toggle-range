@@ -1,6 +1,7 @@
 import React from "react";
 import data from "./data";
 import ListItem from "./ListItem/ListItem";
+import DraggableList from "./DraggableList/DraggableList";
 import "./App.css";
 
 class App extends React.Component {
@@ -38,15 +39,35 @@ class App extends React.Component {
       <ListItem item={item} isActive={isActive} />
     );
 
+    const style = {
+      width: "80%",
+      height: "100%",
+      display: "flex",
+      flexDirection: "column"
+    };
+
     return (
       <div className="App">
-        <h1>One</h1>
+        <div className="App__row">
+          <h1>One</h1>
 
-        <DraggableList data={type1} DraggableItem={Item} onMove={this.onMove} />
+          <DraggableList
+            style={style}
+            data={type1}
+            DraggableItem={Item}
+            onMove={this.onMove}
+          />
+        </div>
+        <div className="App__row">
+          <h1>Two</h1>
 
-        <h1>Two</h1>
-
-        <DraggableList data={type2} DraggableItem={Item} onMove={this.onMove} />
+          <DraggableList
+            style={style}
+            data={type2}
+            DraggableItem={Item}
+            onMove={this.onMove}
+          />
+        </div>
       </div>
     );
   }

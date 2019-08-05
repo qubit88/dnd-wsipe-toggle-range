@@ -9,16 +9,20 @@ function VisibleView({ children }) {
 
   function onMouseDown(event) {
     setInitialPos({ x: event.clientX, y: event.clientY });
+    console.log(initialPos);
   }
 
   function onMouseMove(event) {
     const deltaX = initialPos ? initialPos.x - event.clientX : 0;
 
-    if (deltaX > 0) {
+    console.log(deltaX);
+
+    if (deltaX > 20) {
       if (isSwiping) {
+        // debugger;
         setTranslate(deltaX);
       } else {
-        const deltaY = Math.abs(initialPos.Y - event.clientY);
+        const deltaY = Math.abs(initialPos.y - event.clientY);
         const s = deltaX / deltaY;
 
         if (s > threshold) {
@@ -34,7 +38,7 @@ function VisibleView({ children }) {
   }
   return (
     <div
-      style={{ transform: `translateX(-${translate})` }}
+      style={{ transform: `translateX(-${translate}px)` }}
       onMouseDown={onMouseDown}
       onMouseMove={onMouseMove}
       onMouseUp={onMouseUp}
