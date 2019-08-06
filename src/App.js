@@ -10,7 +10,7 @@ class App extends React.Component {
 
     this.state = {
       data,
-      sort: false
+      draggable: false
     };
   }
 
@@ -43,8 +43,8 @@ class App extends React.Component {
     this.setState({ data: [...newData] });
   };
 
-  onToggleSort = () => {
-    this.setState(state => ({ sort: !state.sort }));
+  onToggleDraggable = () => {
+    this.setState(state => ({ draggable: !state.draggable }));
   };
 
   render() {
@@ -73,10 +73,10 @@ class App extends React.Component {
         <div>
           <input
             type="checkbox"
-            onChange={this.onToggleSort}
-            checked={this.state.sort}
+            onChange={this.onToggleDraggable}
+            checked={this.state.draggable}
           />
-          Sort mode
+          draggable mode
         </div>
 
         <div className="App__row">
@@ -88,7 +88,7 @@ class App extends React.Component {
             data={type1}
             DraggableItem={Item}
             onMove={this.onMove}
-            sort={this.state.sort}
+            draggable={this.state.draggable}
           />
         </div>
         <div className="App__row">
@@ -100,7 +100,7 @@ class App extends React.Component {
             data={type2}
             DraggableItem={Item}
             onMove={this.onMove}
-            sort={this.state.sort}
+            draggable={this.state.draggable}
           />
         </div>
       </div>

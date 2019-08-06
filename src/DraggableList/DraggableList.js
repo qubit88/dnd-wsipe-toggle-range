@@ -4,36 +4,125 @@ import "./DraggableList.css";
 export class DraggableList extends Component {
   constructor(props) {
     super(props);
-
-    this.state = { isDragged: false };
+    this.draggedRef = React.createRef();
+    this.state = {
+      isDragged: false,
+      draggedId: null,
+      initialPos: null,
+      shiftX: null,
+      shiftY: null
+    };
   }
 
   onDragStart = (event, id) => {
-    this.setState({ isDragged: true });
-    event.dataTransfer.setData("text/plain", id);
+    this.setState({ draggedId: id });
   };
 
   onDrop = (event, dropId) => {
     event.preventDefault();
-    const id = Number(event.dataTransfer.getData("text"));
+    this.setState({ draggedId: null });
 
-    this.props.onMove(id, dropId);
+    this.props.onMove(this.state.draggedId, dropId);
+  };
+
+  onTouchDragStart = (event, id) => {
+    this.draggedRef.current = event.target.closest(".DraggableList__item");
+    document.addEventListener("touchmove", this.onTouchDragMove);
+    document.addEventListener("touchend", this.onTouchDragEnd);
+
+    this.draggedRef.current.style.width =
+      this.draggedRef.current.getBoundingClientRect().width + "px";
+
+    this.draggedRef.current.style.position = "fixed";
+    this.draggedRef.current.style.zIndex = "1000";
+
+    let touchEvent = event.changedTouches[0];
+    const shiftX =
+      touchEvent.clientX - this.draggedRef.current.getBoundingClientRect().left;
+    const shiftY =
+      touchEvent.clientY - this.draggedRef.current.getBoundingClientRect().top;
+
+    console.log(
+      "shiftX",
+      shiftX,
+      this.draggedRef.current.getBoundingClientRect().left
+    );
+
+    this.setState({
+      draggedId: id,
+      initialPos: {
+        x: touchEvent.clientX,
+        y: touchEvent.clientY
+      },
+      shiftX,
+      shiftY
+    });
+  };
+
+  onTouchDragMove = event => {
+    const left = event.touches[0].pageX - this.state.shiftX;
+    const top = event.touches[0].pageY - this.state.shiftY;
+
+    console.log(left, this.state.shiftX);
+
+    this.draggedRef.current.style.left = left + "px";
+    this.draggedRef.current.style.top = top + "px";
+  };
+
+  onTouchDragEnd = event => {
+    document.removeEventListener("touchmove", this.onTouchDragMove);
+
+    document.removeEventListener("touchend", this.onTouchDragEnd);
+
+    const changedTouch = event.changedTouches[0];
+
+    const dropTarget = document
+      .elementFromPoint(changedTouch.clientX, changedTouch.clientY)
+      .closest(".DraggableList__item");
+
+    if (dropTarget) {
+      const dropId = Number(dropTarget.dataset.id);
+
+      this.props.onMove(this.state.draggedId, dropId);
+    }
+
+    this.setState({
+      draggedId: null,
+      initialPos: null,
+      shiftX: null,
+      shiftY: null
+    });
+
+    this.draggedRef.current.style.position = "static";
+    this.draggedRef.current.style.zIndex = "initial";
+    this.draggedRef.current.style.width = this.props.rowStyle.width
+      ? this.props.rowStyle.width
+      : "100%";
   };
 
   render() {
-    let { data, DraggableItem, style, rowStyle, sort } = this.props;
-    console.log(sort);
+    let { data, DraggableItem, style, rowStyle, draggable } = this.props;
+
     return (
       <div style={style}>
         {data.map(i => {
           return (
             <div
               key={i.id}
-              onDragStart={event => this.onDragStart(event, i.id)}
+              data-id={i.id}
+              onDragStart={
+                draggable ? event => this.onDragStart(event, i.id) : undefined
+              }
+              onTouchStart={
+                draggable
+                  ? event => this.onTouchDragStart(event, i.id)
+                  : undefined
+              }
               onDrop={event => this.onDrop(event, i.id)}
               onDragOver={e => e.preventDefault()}
-              draggable={sort}
+              draggable={draggable}
               style={rowStyle}
+              className="DraggableList__item"
             >
               <DraggableItem item={i} />
             </div>
