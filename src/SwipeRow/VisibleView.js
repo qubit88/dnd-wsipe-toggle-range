@@ -3,13 +3,11 @@ import "./VisibleView.css";
 
 function VisibleView({ children, swipable }) {
   const [initialPos, setInitialPos] = useState(null);
-  const [isSwiping, setIsSwiping] = useState(false);
   const [translate, setTranslate] = useState(0);
   const [paused, setPaused] = useState(null);
   const threshold = 2;
 
   function onSwipeStart(event) {
-    // event.preventDefault();
     event = event.changedTouches ? event.changedTouches[0] : event;
 
     setInitialPos({ x: event.clientX, y: event.clientY });
@@ -17,8 +15,12 @@ function VisibleView({ children, swipable }) {
   }
 
   function onSwipeMove(event) {
-    // event.preventDefault();
-    event = event.changedTouches ? event.changedTouches[0] : event;
+    if (event.changedTouches) {
+      event = event.changedTouches[0];
+      document.addEventListener("touchend", onSwipeEnd);
+    } else {
+      document.addEventListener("mouseup", onSwipeEnd);
+    }
 
     if (paused || !initialPos) {
       return;
@@ -30,10 +32,8 @@ function VisibleView({ children, swipable }) {
 
     if (s > threshold) {
       if (deltaX > 10) {
-        setIsSwiping(true);
         setTranslate("-25");
       } else if (deltaX < -10) {
-        setIsSwiping(false);
         setTranslate("0");
       }
     }
@@ -50,8 +50,6 @@ function VisibleView({ children, swipable }) {
       onTouchStart={swipable ? onSwipeStart : undefined}
       onMouseMove={onSwipeMove}
       onTouchMove={onSwipeMove}
-      onMouseUp={onSwipeEnd}
-      onTouchEnd={onSwipeEnd}
       className="VisibleView"
     >
       {children}

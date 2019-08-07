@@ -60,7 +60,7 @@ class App extends React.Component {
       height: "100%",
       display: "flex",
       flexDirection: "column",
-      minHeight: "10vw",
+      minHeight: "3em",
       backgroundColor: "#8D6E63",
       padding: "2px 4px"
     };
