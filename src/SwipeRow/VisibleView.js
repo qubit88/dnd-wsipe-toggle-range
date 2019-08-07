@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./VisibleView.css";
 
-function VisibleView({ children }) {
+function VisibleView({ children, swipable }) {
   const [initialPos, setInitialPos] = useState(null);
   const [isSwiping, setIsSwiping] = useState(false);
   const [translate, setTranslate] = useState(0);
@@ -40,17 +40,14 @@ function VisibleView({ children }) {
   }
 
   function onSwipeEnd(event) {
-    // if (isSwiping) {
     setPaused(true);
-    // }
-    // setInitialPos(null);
-    // setIsSwiping(false);
+    setInitialPos(null);
   }
   return (
     <div
       style={{ transform: `translateX(${translate}%)` }}
-      onMouseDown={onSwipeStart}
-      onTouchStart={onSwipeStart}
+      onMouseDown={swipable ? onSwipeStart : undefined}
+      onTouchStart={swipable ? onSwipeStart : undefined}
       onMouseMove={onSwipeMove}
       onTouchMove={onSwipeMove}
       onMouseUp={onSwipeEnd}
