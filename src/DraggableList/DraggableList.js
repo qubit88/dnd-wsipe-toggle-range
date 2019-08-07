@@ -16,6 +16,7 @@ export class DraggableList extends Component {
 
   onDragStart = (event, id) => {
     event.dataTransfer.setData("text/plain", id);
+    this.setState({ draggedId: id });
   };
 
   onDrop = (event, type) => {
@@ -134,7 +135,10 @@ export class DraggableList extends Component {
               style={rowStyle}
               className="DraggableList__item"
             >
-              <DraggableItem item={i} />
+              <DraggableItem
+                item={i}
+                isActive={this.state.draggedId === i.id}
+              />
             </div>
           );
         })}
