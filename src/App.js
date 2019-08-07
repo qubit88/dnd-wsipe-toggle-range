@@ -59,13 +59,17 @@ class App extends React.Component {
       width: "100%",
       height: "100%",
       display: "flex",
-      flexDirection: "column"
+      flexDirection: "column",
+      minHeight: "10vw",
+      backgroundColor: "#8D6E63",
+      padding: "2px 4px"
     };
 
     const rowStyle = {
       width: "100%",
       maxHeight: "3em",
-      height: "10vw"
+      height: "10vw",
+      margin: "2px 0"
     };
 
     return (

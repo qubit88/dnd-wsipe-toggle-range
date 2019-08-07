@@ -26,8 +26,9 @@ export class DraggableList extends Component {
     let dropTarget = event.target.closest(".DraggableList__item");
 
     const dropId = Number(dropTarget ? dropTarget.dataset.id : 0);
-
-    this.props.onMove(id, dropId, type);
+    if (id) {
+      this.props.onMove(id, dropId, type);
+    }
 
     this.setState({ draggedId: null });
   };
@@ -52,10 +53,6 @@ export class DraggableList extends Component {
 
     this.setState({
       draggedId: id,
-      initialPos: {
-        x: touchEvent.clientX,
-        y: touchEvent.clientY
-      },
       shiftX,
       shiftY
     });
@@ -76,19 +73,25 @@ export class DraggableList extends Component {
 
     const changedTouch = event.changedTouches[0];
 
-    const dropTarget = document
-      .elementFromPoint(changedTouch.clientX, changedTouch.clientY)
-      .closest(".DraggableList__item");
+    const target = document.elementFromPoint(
+      changedTouch.clientX,
+      changedTouch.clientY
+    );
 
-    if (dropTarget) {
-      const dropId = Number(dropTarget.dataset.id);
+    const dropTarget = target.closest(".DraggableList__item");
 
-      this.props.onMove(this.state.draggedId, dropId);
+    const dropId = Number(dropTarget ? dropTarget.dataset.id : 0);
+
+    const type =
+      target.closest(".DraggableList__container") &&
+      target.closest(".DraggableList__container").dataset.type;
+
+    if (type) {
+      this.props.onMove(this.state.draggedId, dropId, type);
     }
 
     this.setState({
       draggedId: null,
-      initialPos: null,
       shiftX: null,
       shiftY: null
     });
@@ -110,6 +113,7 @@ export class DraggableList extends Component {
         style={style}
         className="DraggableList__container"
         onDrop={event => this.onDrop(event, type)}
+        data-type={type}
         onDragOver={e => e.preventDefault()}
       >
         {data.map(i => {
