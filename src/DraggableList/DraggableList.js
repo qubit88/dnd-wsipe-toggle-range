@@ -20,9 +20,10 @@ export class DraggableList extends Component {
 
   onDrop = (event, dropId) => {
     event.preventDefault();
-    this.setState({ draggedId: null });
 
     this.props.onMove(this.state.draggedId, dropId);
+
+    this.setState({ draggedId: null });
   };
 
   onTouchDragStart = (event, id) => {
@@ -33,20 +34,15 @@ export class DraggableList extends Component {
     this.draggedRef.current.style.width =
       this.draggedRef.current.getBoundingClientRect().width + "px";
 
-    this.draggedRef.current.style.position = "fixed";
-    this.draggedRef.current.style.zIndex = "1000";
-
     let touchEvent = event.changedTouches[0];
     const shiftX =
       touchEvent.clientX - this.draggedRef.current.getBoundingClientRect().left;
     const shiftY =
       touchEvent.clientY - this.draggedRef.current.getBoundingClientRect().top;
 
-    console.log(
-      "shiftX",
-      shiftX,
-      this.draggedRef.current.getBoundingClientRect().left
-    );
+    this.draggedRef.current.style.position = "fixed";
+    this.draggedRef.current.style.zIndex = "1000";
+    this.draggedRef.current.style.pointerEvents = "none";
 
     this.setState({
       draggedId: id,
@@ -60,10 +56,14 @@ export class DraggableList extends Component {
   };
 
   onTouchDragMove = event => {
-    const left = event.touches[0].pageX - this.state.shiftX;
-    const top = event.touches[0].pageY - this.state.shiftY;
+    const left = event.touches[0].clientX - this.state.shiftX;
+    const top = event.touches[0].clientY - this.state.shiftY;
 
-    console.log(left, this.state.shiftX);
+    console.log(
+      event.touches[0].pageY,
+      this.state.shiftY,
+      this.draggedRef.current
+    );
 
     this.draggedRef.current.style.left = left + "px";
     this.draggedRef.current.style.top = top + "px";
@@ -95,9 +95,11 @@ export class DraggableList extends Component {
 
     this.draggedRef.current.style.position = "static";
     this.draggedRef.current.style.zIndex = "initial";
-    this.draggedRef.current.style.width = this.props.rowStyle.width
-      ? this.props.rowStyle.width
-      : "100%";
+    this.draggedRef.current.style.pointerEvents = "auto";
+    this.draggedRef.current.style.width =
+      this.props.rowStyle && this.props.rowStyle.width
+        ? this.props.rowStyle.width
+        : "100%";
   };
 
   render() {
