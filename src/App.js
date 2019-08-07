@@ -14,26 +14,21 @@ class App extends React.Component {
     };
   }
 
-  onMove = (id, prevId) => {
+  onMove = (id, prevId, type) => {
     let movedItem;
-    let index;
     const dropIndex = this.state.data.findIndex(item => item.id === prevId);
-    const newType = this.state.data[dropIndex].type;
     const newList = this.state.data.filter((item, i) => {
       if (item.id === id) {
         movedItem = item;
-        index = i;
         return false;
       }
 
       return true;
     });
 
-    movedItem = { ...movedItem, type: newType };
+    movedItem = { ...movedItem, type: type };
 
-    const newIndex = dropIndex > index ? dropIndex + 1 : dropIndex;
-
-    newList.splice(newIndex, 0, movedItem);
+    newList.splice(dropIndex, 0, movedItem);
 
     this.setState({ data: [...newList] });
   };
@@ -88,6 +83,7 @@ class App extends React.Component {
           <h1>One</h1>
 
           <DraggableList
+            type="one"
             style={style}
             rowStyle={rowStyle}
             data={type1}
@@ -100,6 +96,7 @@ class App extends React.Component {
           <h1>Two</h1>
 
           <DraggableList
+            type="two"
             style={style}
             rowStyle={rowStyle}
             data={type2}

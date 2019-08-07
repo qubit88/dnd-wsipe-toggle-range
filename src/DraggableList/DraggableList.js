@@ -15,13 +15,19 @@ export class DraggableList extends Component {
   }
 
   onDragStart = (event, id) => {
-    this.setState({ draggedId: id });
+    event.dataTransfer.setData("text/plain", id);
   };
 
-  onDrop = (event, dropId) => {
+  onDrop = (event, type) => {
     event.preventDefault();
 
-    this.props.onMove(this.state.draggedId, dropId);
+    const id = Number(event.dataTransfer.getData("text"));
+
+    let dropTarget = event.target.closest(".DraggableList__item");
+
+    const dropId = Number(dropTarget ? dropTarget.dataset.id : 0);
+
+    this.props.onMove(id, dropId, type);
 
     this.setState({ draggedId: null });
   };
@@ -58,12 +64,6 @@ export class DraggableList extends Component {
   onTouchDragMove = event => {
     const left = event.touches[0].clientX - this.state.shiftX;
     const top = event.touches[0].clientY - this.state.shiftY;
-
-    console.log(
-      event.touches[0].pageY,
-      this.state.shiftY,
-      this.draggedRef.current
-    );
 
     this.draggedRef.current.style.left = left + "px";
     this.draggedRef.current.style.top = top + "px";
@@ -103,10 +103,15 @@ export class DraggableList extends Component {
   };
 
   render() {
-    let { data, DraggableItem, style, rowStyle, draggable } = this.props;
+    let { data, DraggableItem, style, rowStyle, draggable, type } = this.props;
 
     return (
-      <div style={style}>
+      <div
+        style={style}
+        className="DraggableList__container"
+        onDrop={event => this.onDrop(event, type)}
+        onDragOver={e => e.preventDefault()}
+      >
         {data.map(i => {
           return (
             <div
@@ -120,7 +125,6 @@ export class DraggableList extends Component {
                   ? event => this.onTouchDragStart(event, i.id)
                   : undefined
               }
-              onDrop={event => this.onDrop(event, i.id)}
               onDragOver={e => e.preventDefault()}
               draggable={draggable}
               style={rowStyle}
