@@ -27,7 +27,7 @@ export class DraggableList extends Component {
     let dropTarget = event.target.closest(".DraggableList__item");
 
     const dropId = Number(dropTarget ? dropTarget.dataset.id : 0);
-    if (id) {
+    if (id || id === 0) {
       this.props.onMove(id, dropId, type);
     }
 
@@ -87,7 +87,7 @@ export class DraggableList extends Component {
       target.closest(".DraggableList__container") &&
       target.closest(".DraggableList__container").dataset.type;
 
-    if (type) {
+    if (this.state.draggedId || this.state.draggedId === 0) {
       this.props.onMove(this.state.draggedId, dropId, type);
     }
 
