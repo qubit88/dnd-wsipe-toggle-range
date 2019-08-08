@@ -4,6 +4,7 @@ import ListItem from "./ListItem/ListItem";
 import DraggableList from "./DraggableList/DraggableList";
 import Toggle from "./Toggle/Toggle";
 import Range from "./Range/Range";
+import RangeNumbers from "./Range/RangeNumbers";
 import "./App.css";
 
 class App extends React.Component {
@@ -96,6 +97,10 @@ class App extends React.Component {
         </div>
 
         <div className="App__range-row">
+          <RangeNumbers
+            onClick={this.onRangeChange}
+            value={this.state.rangeValue}
+          />
           <Range value={this.state.rangeValue} onChange={this.onRangeChange} />
         </div>
 

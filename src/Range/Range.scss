@@ -17,6 +17,30 @@
     width: calc(100% - 14px);
   }
 
+  &__number-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 4em;
+  }
+
+  &__number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    color: white;
+    background-color: #ab47bc;
+    transition: background-color 0.3s;
+    cursor: pointer;
+  }
+
+  &__active {
+    background-color: #06d7a0;
+  }
+
   &__input::-webkit-slider-thumb {
     height: 25px;
     width: 25px;
