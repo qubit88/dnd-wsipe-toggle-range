@@ -27,11 +27,12 @@ export class DraggableList extends Component {
     let dropTarget = event.target.closest(".DraggableList__item");
 
     const dropId = Number(dropTarget ? dropTarget.dataset.id : 0);
+
+    this.setState({ draggedId: null });
+
     if (id || id === 0) {
       this.props.onMove(id, dropId, type);
     }
-
-    this.setState({ draggedId: null });
   };
 
   onTouchDragStart = (event, id) => {
@@ -87,9 +88,7 @@ export class DraggableList extends Component {
       target.closest(".DraggableList__container") &&
       target.closest(".DraggableList__container").dataset.type;
 
-    if (this.state.draggedId || this.state.draggedId === 0) {
-      this.props.onMove(this.state.draggedId, dropId, type);
-    }
+    const id = this.state.draggedId;
 
     this.setState({
       draggedId: null,
@@ -104,6 +103,10 @@ export class DraggableList extends Component {
       this.props.rowStyle && this.props.rowStyle.width
         ? this.props.rowStyle.width
         : "100%";
+
+    if (id || id === 0) {
+      this.props.onMove(id, dropId, type);
+    }
   };
 
   render() {

@@ -42,6 +42,8 @@ function VisibleView({ children, swipable }) {
   function onSwipeEnd(event) {
     setPaused(true);
     setInitialPos(null);
+    document.removeEventListener("touchend", onSwipeEnd);
+    document.removeEventListener("mouseup", onSwipeEnd);
   }
   return (
     <div
