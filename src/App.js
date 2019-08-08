@@ -2,6 +2,7 @@ import React from "react";
 import data from "./data";
 import ListItem from "./ListItem/ListItem";
 import DraggableList from "./DraggableList/DraggableList";
+import Toggle from "./Toggle/Toggle";
 import "./App.css";
 
 class App extends React.Component {
@@ -74,13 +75,18 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <div>
-          <input
-            type="checkbox"
-            onChange={this.onToggleDraggable}
+        <div className="App__toggle-row">
+          <Toggle
             checked={this.state.draggable}
+            onChange={this.onToggleDraggable}
+            color="#06d7a0"
           />
-          draggable mode
+          <span
+            style={{ color: this.state.draggable && "#06d7a0" }}
+            className="App__toggle-text"
+          >
+            draggable mode
+          </span>
         </div>
 
         <div className="App__row">

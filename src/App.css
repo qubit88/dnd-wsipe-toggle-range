@@ -1,5 +1,6 @@
 .App {
   height: 100%;
+  padding-top: 2vw;
   width: 90%;
   margin-left: auto;
   margin-right: auto;
@@ -7,6 +8,16 @@
 
 .App__row {
   width: 100%;
+}
+
+.App__toggle-row {
+  display: flex;
+}
+
+.App__toggle-text {
+  display: inline-block;
+  margin-left: 1em;
+  color: #767577;
 }
 
 #root {

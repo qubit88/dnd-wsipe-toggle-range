@@ -1,0 +1,42 @@
+.Toggle-checkbox__input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.Toggle-checkbox__input:checked
+  + .Toggle-checkbox__label
+  .Toggle-checkbox__handle {
+  left: calc(100% - 4px);
+  transform: translateX(-100%);
+  transition: 0.3s;
+}
+
+.Toggle-checkbox__input:checked + .Toggle-checkbox__label {
+  background-color: #06d7a0;
+}
+
+.Toggle-checkbox__label {
+  width: 50px;
+  height: 25px;
+  border-radius: 25px;
+  position: relative;
+  background-color: #767577;
+  display: block;
+  transition: background-color 0.3s;
+}
+
+.Toggle-checkbox__label:active .Toggle-checkbox__handle {
+  width: 24px;
+}
+
+.Toggle-checkbox__handle {
+  width: 19px;
+  height: 19px;
+  border-radius: 18px;
+  background-color: white;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: 0.3s;
+}
