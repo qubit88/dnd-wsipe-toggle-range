@@ -3,6 +3,7 @@ import data from "./data";
 import ListItem from "./ListItem/ListItem";
 import DraggableList from "./DraggableList/DraggableList";
 import Toggle from "./Toggle/Toggle";
+import Range from "./Range/Range";
 import "./App.css";
 
 class App extends React.Component {
@@ -11,7 +12,8 @@ class App extends React.Component {
 
     this.state = {
       data,
-      draggable: false
+      draggable: false,
+      rangeValue: 2
     };
   }
 
@@ -43,6 +45,10 @@ class App extends React.Component {
     this.setState(state => ({ draggable: !state.draggable }));
   };
 
+  onRangeChange = value => {
+    this.setState({ rangeValue: value });
+  };
+
   render() {
     const type1 = this.state.data.filter(item => item.type === "one");
     const type2 = this.state.data.filter(item => item.type === "two");
@@ -70,7 +76,7 @@ class App extends React.Component {
       width: "100%",
       maxHeight: "3em",
       height: "10vw",
-      margin: "2px 0"
+      margin: `${this.state.rangeValue}px 0`
     };
 
     return (
@@ -87,6 +93,10 @@ class App extends React.Component {
           >
             draggable mode
           </span>
+        </div>
+
+        <div className="App__range-row">
+          <Range value={this.state.rangeValue} onChange={this.onRangeChange} />
         </div>
 
         <div className="App__row">
