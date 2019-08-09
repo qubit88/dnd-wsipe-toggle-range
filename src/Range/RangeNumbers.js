@@ -17,8 +17,8 @@ function RangeNumbers({
         <div
           style={{
             background:
-              (value == n && activeColor) ||
-              (value == n && "#AED581") ||
+              (value === n && activeColor) ||
+              (value === n && "#AED581") ||
               color ||
               "black"
           }}
