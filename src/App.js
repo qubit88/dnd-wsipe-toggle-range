@@ -100,8 +100,14 @@ class App extends React.Component {
           <RangeNumbers
             onClick={this.onRangeChange}
             value={this.state.rangeValue}
+            color="#4A148C"
+            activeColor="#06d7a0"
           />
-          <Range value={this.state.rangeValue} onChange={this.onRangeChange} />
+          <Range
+            color={"linear-gradient(to right, rgba(0,0,0,0) 0%, #4A148C 100%)"}
+            value={this.state.rangeValue}
+            onChange={this.onRangeChange}
+          />
         </div>
 
         <div className="App__row">
