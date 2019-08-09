@@ -9,5 +9,5 @@
 }
 
 .isActive {
-  border: 2px solid white;
+  background-color: rgb(179, 161, 214);
 }

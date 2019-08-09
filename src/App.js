@@ -69,7 +69,7 @@ class App extends React.Component {
       display: "flex",
       flexDirection: "column",
       minHeight: "3em",
-      backgroundColor: "#8D6E63",
+      backgroundColor: "#767577",
       padding: "2px 4px"
     };
 

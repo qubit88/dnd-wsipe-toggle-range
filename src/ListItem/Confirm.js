@@ -21,6 +21,7 @@ function Confirm({ onDelete }) {
             x2="44.8141"
             y2="43.3999"
             stroke="#DC3636"
+            strokeWidth="3"
           />
           <line
             x1="1.61882"
@@ -28,6 +29,7 @@ function Confirm({ onDelete }) {
             x2="43.7258"
             y2="1.33164"
             stroke="#DC3636"
+            strokeWidth="3"
           />
         </svg>
       </button>
