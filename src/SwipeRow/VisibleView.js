@@ -50,8 +50,8 @@ function VisibleView({ children, swipable }) {
       style={{ transform: `translateX(${translate}%)` }}
       onMouseDown={swipable ? onSwipeStart : undefined}
       onTouchStart={swipable ? onSwipeStart : undefined}
-      onMouseMove={onSwipeMove}
-      onTouchMove={onSwipeMove}
+      onMouseMove={swipable ? onSwipeMove : undefined}
+      onTouchMove={swipable ? onSwipeMove : undefined}
       className="VisibleView"
     >
       {children}
