@@ -11,7 +11,7 @@ function RangeNumbers({ min = 0, max = 10, value, onClick }) {
         <div
           key={n}
           onClick={e => onClick(n)}
-          className={`Range__number ${value === n ? "Range__active" : ""}`}
+          className={`Range__number ${value == n ? "Range__active" : ""}`}
         >
           {n}
         </div>
