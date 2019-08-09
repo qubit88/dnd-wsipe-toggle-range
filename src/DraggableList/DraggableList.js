@@ -10,13 +10,32 @@ export class DraggableList extends Component {
       draggedId: null,
       initialPos: null,
       shiftX: null,
-      shiftY: null
+      shiftY: null,
+      dragOverId: null
     };
   }
 
   onDragStart = (event, id) => {
     event.dataTransfer.setData("text/plain", id);
     this.setState({ draggedId: id });
+  };
+
+  onDragEnter = event => {
+    const target = event.target.closest(".DraggableList__item");
+    const id = target && target.dataset.id;
+    if (target && id) {
+      console.log(id);
+      this.setState({ dragOverId: id });
+    }
+  };
+
+  onDragLeave = event => {
+    const dragLeft =
+      event.target.classList &&
+      event.target.classList.contains(".DraggableList__item");
+    if (dragLeft) {
+      this.setState({ dragOverId: null });
+    }
   };
 
   onDrop = (event, type) => {
@@ -28,7 +47,7 @@ export class DraggableList extends Component {
 
     const dropId = Number(dropTarget ? dropTarget.dataset.id : 0);
 
-    this.setState({ draggedId: null });
+    this.setState({ draggedId: null, dragOverId: null });
 
     if (id || id === 0) {
       this.props.onMove(id, dropId, type);
@@ -61,8 +80,10 @@ export class DraggableList extends Component {
   };
 
   onTouchDragMove = event => {
-    const left = event.touches[0].clientX - this.state.shiftX;
-    const top = event.touches[0].clientY - this.state.shiftY;
+    const changedTouch = event.changedTouches[0];
+
+    const left = changedTouch.clientX - this.state.shiftX;
+    const top = changedTouch.clientY - this.state.shiftY;
 
     this.draggedRef.current.style.left = left + "px";
     this.draggedRef.current.style.top = top + "px";
@@ -134,6 +155,12 @@ export class DraggableList extends Component {
                   : undefined
               }
               onDragOver={e => e.preventDefault()}
+              onDragEnter={
+                draggable ? event => this.onDragEnter(event) : undefined
+              }
+              onDragLeave={
+                draggable ? event => this.onDragLeave(event) : undefined
+              }
               draggable={draggable}
               style={rowStyle}
               className="DraggableList__item"
@@ -141,6 +168,9 @@ export class DraggableList extends Component {
               <DraggableItem
                 item={i}
                 isActive={this.state.draggedId === i.id}
+                isDraggedOver={
+                  this.state.dragOverId && this.state.dragOverId == i.id
+                }
               />
             </div>
           );

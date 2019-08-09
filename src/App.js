@@ -54,11 +54,12 @@ class App extends React.Component {
     const type1 = this.state.data.filter(item => item.type === "one");
     const type2 = this.state.data.filter(item => item.type === "two");
 
-    const Item = ({ item, isActive }) => (
+    const Item = ({ item, isActive, isDraggedOver }) => (
       <ListItem
         item={item}
         swipable={!this.state.draggable}
         isActive={isActive}
+        isDraggedOver={isDraggedOver}
         onDelete={this.onDelete}
       />
     );

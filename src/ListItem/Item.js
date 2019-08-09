@@ -1,9 +1,15 @@
 import React from "react";
 import "./Item.css";
 
-function Item({ item, isActive }) {
+function Item({ item, isActive, isDraggedOver }) {
   return (
-    <div className={`Item ${isActive ? "isActive" : ""}`}>{item.name}</div>
+    <div
+      className={`Item ${isActive ? "isActive" : ""} ${
+        isDraggedOver ? "isDraggedOver" : ""
+      }`}
+    >
+      {item.name}
+    </div>
   );
 }
 

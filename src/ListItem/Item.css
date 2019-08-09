@@ -11,3 +11,7 @@
 .isActive {
   background-color: rgb(179, 161, 214);
 }
+
+.isDraggedOver {
+  outline: 2px solid white;
+}
