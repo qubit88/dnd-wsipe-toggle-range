@@ -15,31 +15,20 @@ export class DraggableList extends Component {
     };
   }
 
+  componentWillUnmount() {
+    document.removeEventListener("touchmove", this.onTouchDragMove);
+
+    document.removeEventListener("touchend", this.onTouchDragEnd);
+  }
+
   onDragStart = (event, id) => {
     event.dataTransfer.setData("text/plain", id);
     this.setState({ draggedId: id });
   };
 
-  onDragEnter = event => {
-    const target = event.target.closest(".DraggableList__item");
-    const id = target && target.dataset.id;
-    if (target && id) {
-      console.log(id);
-      this.setState({ dragOverId: id });
-    }
-  };
-
-  onDragLeave = event => {
-    const dragLeft =
-      event.target.classList &&
-      event.target.classList.contains(".DraggableList__item");
-    if (dragLeft) {
-      this.setState({ dragOverId: null });
-    }
-  };
-
   onDrop = (event, type) => {
     event.preventDefault();
+    document.removeEventListener("dragover", this.onDragOver);
 
     const id = Number(event.dataTransfer.getData("text"));
 
@@ -137,9 +126,9 @@ export class DraggableList extends Component {
       <div
         style={style}
         className="DraggableList__container"
-        onDrop={event => this.onDrop(event, type)}
+        onDrop={draggable ? event => this.onDrop(event, type) : undefined}
         data-type={type}
-        onDragOver={e => e.preventDefault()}
+        onDragOver={draggable ? e => e.preventDefault() : undefined}
       >
         {data.map(i => {
           return (
@@ -154,13 +143,6 @@ export class DraggableList extends Component {
                   ? event => this.onTouchDragStart(event, i.id)
                   : undefined
               }
-              onDragOver={e => e.preventDefault()}
-              onDragEnter={
-                draggable ? event => this.onDragEnter(event) : undefined
-              }
-              onDragLeave={
-                draggable ? event => this.onDragLeave(event) : undefined
-              }
               draggable={draggable}
               style={rowStyle}
               className="DraggableList__item"
@@ -168,9 +150,7 @@ export class DraggableList extends Component {
               <DraggableItem
                 item={i}
                 isActive={this.state.draggedId === i.id}
-                isDraggedOver={
-                  this.state.dragOverId && this.state.dragOverId == i.id
-                }
+                // isDraggedOver={dragOverId == i.id}
               />
             </div>
           );
