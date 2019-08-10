@@ -83,6 +83,9 @@ export class DraggableList extends Component {
 
     document.removeEventListener("touchend", this.onTouchDragEnd);
 
+    let dropId;
+    let type;
+
     const changedTouch = event.changedTouches[0];
 
     const target = document.elementFromPoint(
@@ -90,13 +93,14 @@ export class DraggableList extends Component {
       changedTouch.clientY
     );
 
-    const dropTarget = target.closest(".DraggableList__item");
+    const listTarget = target.closest(".DraggableList__container");
 
-    const dropId = Number(dropTarget ? dropTarget.dataset.id : 0);
+    if (listTarget) {
+      const dropTarget = target.closest(".DraggableList__item");
+      dropId = Number((dropTarget && dropTarget.dataset.id) || 0);
 
-    const type =
-      target.closest(".DraggableList__container") &&
-      target.closest(".DraggableList__container").dataset.type;
+      type = listTarget.dataset.type;
+    }
 
     const id = this.state.draggedId;
 
@@ -107,14 +111,14 @@ export class DraggableList extends Component {
     });
 
     this.draggedRef.current.style.position = "static";
-    this.draggedRef.current.style.zIndex = "initial";
+    this.draggedRef.current.style.zIndex = "1";
     this.draggedRef.current.style.pointerEvents = "auto";
     this.draggedRef.current.style.width =
       this.props.rowStyle && this.props.rowStyle.width
         ? this.props.rowStyle.width
         : "100%";
 
-    if (id || id === 0) {
+    if (listTarget && (id || id === 0)) {
       this.props.onMove(id, dropId, type);
     }
   };
