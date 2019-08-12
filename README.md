@@ -49,17 +49,21 @@ There can be multiple lists on page.
 
 ## Range
 
+`color` prop can be a color or gradient
+
 ```
 <RangeNumbers
     onClick={this.onRangeChange}
     value={this.state.rangeValue}
     color="#4A148C"
-    activeColor="#06d7a0" />
+    activeColor="#06d7a0"
+/>
 ```
 
 ```
 <Range
     color={"linear-gradient(to right, rgba(0,0,0,0) 0%, #4A148C 100%)"}
     value={this.state.rangeValue}
-    onChange={this.onRangeChange} />
+    onChange={this.onRangeChange}
+/>
 ```

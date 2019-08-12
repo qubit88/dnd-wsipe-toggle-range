@@ -99,7 +99,7 @@ class App extends React.Component {
 
         <div className="App__range-row">
           <RangeNumbers
-            onClick={this.onRangeChange}
+            onChange={this.onRangeChange}
             value={this.state.rangeValue}
             color="#4A148C"
             activeColor="#06d7a0"

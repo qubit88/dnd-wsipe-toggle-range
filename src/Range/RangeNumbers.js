@@ -4,8 +4,8 @@ import "./Range.scss";
 function RangeNumbers({
   min = 0,
   max = 10,
-  value,
-  onClick,
+  value = 5,
+  onChange,
   color,
   activeColor
 }) {
@@ -23,8 +23,8 @@ function RangeNumbers({
               "black"
           }}
           key={n}
-          onClick={e => onClick(n)}
-          className={`Range__number`}
+          onClick={e => onChange(n)}
+          className="Range__number"
         >
           {n}
         </div>
