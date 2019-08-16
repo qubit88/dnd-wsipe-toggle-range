@@ -30,7 +30,7 @@ class App extends React.Component {
       return true;
     });
 
-    movedItem = { ...movedItem, type: type };
+    movedItem = { ...movedItem, type };
 
     newList.splice(dropIndex, 0, movedItem);
 
